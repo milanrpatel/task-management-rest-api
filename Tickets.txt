@@ -1,0 +1,7 @@
+@Tasks
+Task-1: Init Git Repo
+Task-2: Setup node.js project and basic express structure
+    - Initialize the Node.js project and install required dependencies
+    - Configure the Express server and set up basic routes
+Task-3: Config database and create schema
+    - Set up PostgreSQL database and create initial schema
