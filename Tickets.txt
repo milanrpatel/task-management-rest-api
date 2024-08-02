@@ -1,7 +1,28 @@
 @Tasks
+
 Task-1: Init Git Repo
+
 Task-2: Setup node.js project and basic express structure
     - Initialize the Node.js project and install required dependencies
     - Configure the Express server and set up basic routes
+
 Task-3: Config database and create schema
     - Set up PostgreSQL database and create initial schema
+    - Add some dummy data to db
+
+Task-4: Implement POST /tasks Endpoint to create a new task
+    - Develop the endpoint to create a new task
+    - Validation of task data
+
+Task-5: Implement GET /tasks Endpoint to get all the tasks
+    - Develop the endpoint to retrieve all tasks
+    - Implement pagination
+
+Task-6: Implement GET /tasks/:id Endpoint to get a single task by ID
+    - Develop the endpoint to retrieve a single task by ID
+
+Task-7: Implement PUT /tasks/:id Endpoint to update task by ID
+    - Develop the endpoint to update an existing task
+
+Task-8: Implement DELETE /tasks/:id Endpoint to delete a task by ID 
+    - Develop the endpoint to delete a task by ID.
