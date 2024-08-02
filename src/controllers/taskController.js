@@ -1,11 +1,26 @@
-const { TASK_REQUIRED_MESSAGE, ALLOWED_STATUSES } = require('../config/constants');
+const { TASK_REQUIRED_MESSAGE, ALLOWED_STATUSES, ERROR_PAGINATION } = require('../config/constants');
 const { getAllTasks, createNewTask } = require('../services/taskService');
 const { errorResponse, successResponse } = require('../utils/response');
 
+/**
+ * Get all tasks with pagination
+ * @function getTasks
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const getTasks = async (req, res) => {
     try {
-        const tasks = await getAllTasks();
-        res.status(200).json(tasks);
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const page = parseInt(req.query.page, 10) || 1;
+
+        if (limit <= 0 || page < 0) {
+            return res.status(400).json(errorResponse(ERROR_PAGINATION));
+        }
+
+        const tasks = await getAllTasks(page, limit);
+
+        res.status(200).json(successResponse(tasks));
     } catch (error) {
         res.status(500).json(errorResponse(error.message));
     }
