@@ -4,8 +4,10 @@ const TASK_REQUIRED_MESSAGE = {
     description: 'Description is required',
     status: `Status is required and should be one of ${ALLOWED_STATUSES.join(', ')}`,
 };
+const ERROR_PAGINATION = 'Invalid limit or page';
 
 module.exports = {
     ALLOWED_STATUSES,
     TASK_REQUIRED_MESSAGE,
+    ERROR_PAGINATION,
 }
