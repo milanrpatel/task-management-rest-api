@@ -1,5 +1,5 @@
 const { TASK_REQUIRED_MESSAGE, ALLOWED_STATUSES, ERROR_PAGINATION, ERROR_TASK_NOT_FOUND } = require('../config/constants');
-const { getAllTasks, createNewTask, getTaskDetailsById } = require('../services/taskService');
+const { getAllTasks, createNewTask, getTaskDetailsById, updateTaskByID } = require('../services/taskService');
 const { errorResponse, successResponse } = require('../utils/response');
 
 /**
@@ -73,8 +73,43 @@ const createTask = async (req, res) => {
     }
 }
 
+/**
+ * Update a task by id
+ * @function updateTask
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+const updateTask = async (req, res) => {
+    try {
+        const { title, description, status } = req.body;
+
+        if (title !== undefined && (typeof title !== 'string' || title.trim() === '')) {
+            return res.status(400).json(errorResponse(TASK_REQUIRED_MESSAGE.title));
+        }
+        if (description !== undefined && typeof description !== 'string') {
+            return res.status(400).json(errorResponse(TASK_REQUIRED_MESSAGE.description));
+        }
+        if (status !== undefined && !ALLOWED_STATUSES.includes(status)) {
+            return res.status(400).json(errorResponse(TASK_REQUIRED_MESSAGE.status));
+        }
+
+        const data = { title, description, status };
+        const task = await updateTaskByID(req.params.id, data);
+
+        if (!task) {
+            return res.status(404).json(errorResponse(`${ERROR_TASK_NOT_FOUND} with id ${req.params.id}`));
+        }
+
+        res.status(200).json(successResponse(task));
+    } catch (error) {
+        res.status(500).json(errorResponse(error.message));
+    }
+}
+
 module.exports = {
     getTasks,
     createTask,
     getTaskById,
+    updateTask,
 }
