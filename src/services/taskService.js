@@ -84,13 +84,26 @@ const updateTaskByID = async (id, task) => {
     values.push(id);
 
     const result = await db.query(`${query} RETURNING *`, values);
-    
+
     return result.rows[0];
 };
+
+/**
+ * Delete a task by id service
+ * @function deleteTaskById
+ * @param {*} id 
+ * @returns 
+ */
+const deleteTaskById = async (id) => {
+    const query = 'DELETE FROM tasks WHERE id = $1';
+    const { rowCount } = await db.query(query, [id]);
+    return rowCount;
+}
 
 module.exports = {
     getAllTasks,
     createNewTask,
     getTaskDetailsById,
     updateTaskByID,
+    deleteTaskById
 }

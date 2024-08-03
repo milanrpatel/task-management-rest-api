@@ -1,5 +1,5 @@
 const { TASK_REQUIRED_MESSAGE, ALLOWED_STATUSES, ERROR_PAGINATION, ERROR_TASK_NOT_FOUND } = require('../config/constants');
-const { getAllTasks, createNewTask, getTaskDetailsById, updateTaskByID } = require('../services/taskService');
+const { getAllTasks, createNewTask, getTaskDetailsById, updateTaskByID, deleteTaskById } = require('../services/taskService');
 const { errorResponse, successResponse } = require('../utils/response');
 
 /**
@@ -107,9 +107,31 @@ const updateTask = async (req, res) => {
     }
 }
 
+/**
+ * Delete a task by id
+ * @function deleteTask
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+const deleteTask = async (req, res) => {
+    try {
+        const task = await getTaskDetailsById(req.params.id);
+        if (!task) {
+            return res.status(404).json(errorResponse(`${ERROR_TASK_NOT_FOUND} with id ${req.params.id}`));
+        }
+        await deleteTaskById(req.params.id);
+
+        res.status(204).end();
+    } catch (error) {
+        res.status(500).json(errorResponse(error.message));
+    }
+}
+
 module.exports = {
     getTasks,
     createTask,
     getTaskById,
     updateTask,
+    deleteTask
 }
