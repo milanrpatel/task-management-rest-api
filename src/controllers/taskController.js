@@ -1,5 +1,5 @@
-const { TASK_REQUIRED_MESSAGE, ALLOWED_STATUSES, ERROR_PAGINATION } = require('../config/constants');
-const { getAllTasks, createNewTask } = require('../services/taskService');
+const { TASK_REQUIRED_MESSAGE, ALLOWED_STATUSES, ERROR_PAGINATION, ERROR_TASK_NOT_FOUND } = require('../config/constants');
+const { getAllTasks, createNewTask, getTaskDetailsById } = require('../services/taskService');
 const { errorResponse, successResponse } = require('../utils/response');
 
 /**
@@ -21,6 +21,25 @@ const getTasks = async (req, res) => {
         const tasks = await getAllTasks(page, limit);
 
         res.status(200).json(successResponse(tasks));
+    } catch (error) {
+        res.status(500).json(errorResponse(error.message));
+    }
+}
+
+/**
+ * Get a task by id
+ * @function getTaskById
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+const getTaskById = async (req, res) => {
+    try {
+        const task = await getTaskDetailsById(req.params.id);
+        if (!task) {
+            return res.status(404).json(errorResponse(`${ERROR_TASK_NOT_FOUND} with id ${req.params.id}`));
+        }
+        res.status(200).json(successResponse(task));
     } catch (error) {
         res.status(500).json(errorResponse(error.message));
     }
@@ -57,4 +76,5 @@ const createTask = async (req, res) => {
 module.exports = {
     getTasks,
     createTask,
+    getTaskById,
 }
