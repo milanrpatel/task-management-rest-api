@@ -49,8 +49,48 @@ const getTaskDetailsById = async (id) => {
     return rows[0];
 };
 
+/**
+ * Update a task by id service
+ * @function updateTaskByID
+ * @param {*} id 
+ * @param {*} task 
+ * @returns 
+ */
+const updateTaskByID = async (id, task) => {
+    const updates = [];
+    const values = [];
+    let query = 'UPDATE tasks SET ';
+
+    // build the query
+    if (task.title) {
+        updates.push('title = $' + (updates.length + 1));
+        values.push(task.title);
+    }
+    if (task.description) {
+        updates.push('description = $' + (updates.length + 1));
+        values.push(task.description);
+    }
+    if (task.status) {
+        updates.push('status = $' + (updates.length + 1));
+        values.push(task.status);
+    }
+
+    if (updates.length === 0) {
+        throw new Error('No valid fields to update');
+    }
+
+    // Append the updated fields and the condition
+    query += updates.join(', ') + ', updated_at = CURRENT_TIMESTAMP WHERE id = $' + (updates.length + 1);
+    values.push(id);
+
+    const result = await db.query(`${query} RETURNING *`, values);
+    
+    return result.rows[0];
+};
+
 module.exports = {
     getAllTasks,
     createNewTask,
     getTaskDetailsById,
+    updateTaskByID,
 }
