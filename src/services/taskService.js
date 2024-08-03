@@ -37,7 +37,20 @@ const createNewTask = async (task) => {
     return result.rows[0];
 };
 
+/**
+ * Get a task by id service
+ * @function getTaskDetailsById
+ * @param {*} id 
+ * @returns 
+ */
+const getTaskDetailsById = async (id) => {
+    const query = 'SELECT * FROM tasks WHERE id = $1';
+    const { rows } = await db.query(query, [id]);
+    return rows[0];
+};
+
 module.exports = {
     getAllTasks,
     createNewTask,
+    getTaskDetailsById,
 }
