@@ -35,7 +35,16 @@ Task-7: Implement PUT /tasks/:id Endpoint to update task by ID
 Task-8: Implement DELETE /tasks/:id Endpoint to delete a task by ID 
     - Develop the endpoint to delete a task by ID.
 
-@todo
+@done
 Task-9: Add JWT token middleware to protect the endpoints
     - Create endpoint to obtain the jwt token
     - Implement token validation logic in middleware
+
+@todo
+Task-10: Implement Unit testing and Integration test
+    - Unit testing of controller functions
+    - Integration test of endpoints
+
+@todo
+Task-11: Create Dockerfile for the backend RESTful APIs
+    - Create docker-compose yml file to run backend and db docker containers
