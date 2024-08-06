@@ -40,7 +40,7 @@ Task-9: Add JWT token middleware to protect the endpoints
     - Create endpoint to obtain the jwt token
     - Implement token validation logic in middleware
 
-@todo
+@done
 Task-10: Implement Unit testing and Integration test
     - Unit testing of controller functions
     - Integration test of endpoints
