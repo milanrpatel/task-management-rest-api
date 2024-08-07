@@ -45,6 +45,13 @@ Task-10: Implement Unit testing and Integration test
     - Unit testing of controller functions
     - Integration test of endpoints
 
-@todo
+@done
 Task-11: Create Dockerfile for the backend RESTful APIs
     - Create docker-compose yml file to run backend and db docker containers
+
+@done
+Task-12: Documentation of RestAPIs, database and setup instruction
+    - Add RestAPIs information
+    - Database schema
+    - Setup and Run application instructions (Locally and Docker Compose)
+    - Postman collection of APIs
